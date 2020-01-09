@@ -8,7 +8,7 @@ func _ready():
 	pass
 	
 func _input(event):
-	if event is InputEventMouseMotion:
+	if event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
 		if -SENSITIVITY_Y * event.relative.y >= 0 and self.rotation_degrees.x >= MAX_Y:
 			return
 		if -SENSITIVITY_Y * event.relative.y <= 0  and self.rotation_degrees.x <= -MAX_Y:

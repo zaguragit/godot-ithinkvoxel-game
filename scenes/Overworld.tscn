@@ -18,7 +18,18 @@ height = 0.923507
 
 [node name="World" type="Spatial"]
 
+[node name="DirectionalLight" type="DirectionalLight" parent="."]
+transform = Transform( 0.975885, 0.182691, 0.119469, -0.132065, 0.0583665, 0.989521, 0.173804, -0.981436, 0.081086, 0, 0, 0 )
+light_color = Color( 0.905882, 0.901961, 0.878431, 1 )
+shadow_enabled = true
+shadow_bias = 0.77
+directional_shadow_split_2 = 0.209
+directional_shadow_blend_splits = true
+directional_shadow_normal_bias = 2.61
+
 [node name="StaticBody" type="StaticBody" parent="."]
+editor/display_folded = true
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3.63 )
 physics_material_override = SubResource( 1 )
 
 [node name="MeshInstance" type="MeshInstance" parent="StaticBody"]
@@ -26,6 +37,42 @@ mesh = SubResource( 2 )
 material/0 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="StaticBody"]
+shape = SubResource( 3 )
+
+[node name="StaticBody2" type="StaticBody" parent="."]
+editor/display_folded = true
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5.34259, 1.63783, -3.35633 )
+physics_material_override = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="StaticBody2"]
+mesh = SubResource( 2 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="StaticBody2"]
+shape = SubResource( 3 )
+
+[node name="StaticBody4" type="StaticBody" parent="."]
+editor/display_folded = true
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.7055, 0.722231, -0.0912261 )
+physics_material_override = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="StaticBody4"]
+mesh = SubResource( 2 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="StaticBody4"]
+shape = SubResource( 3 )
+
+[node name="StaticBody3" type="StaticBody" parent="."]
+editor/display_folded = true
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -9.14777, 0.742545, 4.95778 )
+physics_material_override = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="StaticBody3"]
+mesh = SubResource( 2 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="StaticBody3"]
 shape = SubResource( 3 )
 
 [node name="Player" type="KinematicBody" parent="."]
