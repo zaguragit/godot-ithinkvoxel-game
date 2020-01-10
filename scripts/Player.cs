@@ -11,10 +11,13 @@ public class Player : KinematicBody {
 	const float GRAVITY = 9.8f;
 	
 	Vector3 velocity = new Vector3(0, 0, 0);
+	Camera camera;
 	float forward_velocity = 0f;
 	float Walk_Speed = 5f;
 	
+	
 	public override void _Ready() {
+		camera = GetNode("Camera") as Camera;
         Input.SetMouseMode(Input.MouseMode.Captured);
 		forward_velocity = Walk_Speed;
 		SetProcess(true);
@@ -33,8 +36,6 @@ public class Player : KinematicBody {
 	public bool IsKeyPressed(KeyList key) { return Input.IsKeyPressed((int) key); }
 	
 	public override void _PhysicsProcess(float delta) {
-		velocity.y -= GRAVITY * delta;
-		
 		if (IsKeyPressed(KeyList.W) || IsKeyPressed(KeyList.Up)) {
 			Walk_Speed += ACCELERATION * delta;
 			if (Walk_Speed > MAX_WALK_SPEED)
@@ -65,11 +66,14 @@ public class Player : KinematicBody {
 			velocity.x = 0;
 			velocity.z = 0;
 			Walk_Speed = 5;
+		} else {
+			camera.bob();
 		}
 			
-		if (IsOnFloor())
-			if (Input.IsActionJustPressed("ui_accept"))
-				velocity.y = JUMP_SPEED;
+		if (IsOnFloor()) {
+			if (IsKeyPressed(KeyList.Space)) velocity.y = JUMP_SPEED;
+			else velocity.y = 0;
+		} else velocity.y -= GRAVITY * delta;
 		velocity = MoveAndSlide(velocity, new Vector3(0,1,0));
 	}
 	
