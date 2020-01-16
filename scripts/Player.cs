@@ -1,5 +1,4 @@
 using Godot;
-using System;
 
 public class Player : KinematicBody {
     
@@ -36,39 +35,34 @@ public class Player : KinematicBody {
 	public bool IsKeyPressed(KeyList key) { return Input.IsKeyPressed((int) key); }
 	
 	public override void _PhysicsProcess(float delta) {
-		if (IsKeyPressed(KeyList.W) || IsKeyPressed(KeyList.Up)) {
-			Walk_Speed += ACCELERATION * delta;
-			if (Walk_Speed > MAX_WALK_SPEED)
-				Walk_Speed = MAX_WALK_SPEED;
-			velocity.x = -GlobalTransform.basis.z.x * Walk_Speed;
-			velocity.z = -GlobalTransform.basis.z.z * Walk_Speed;
-		} if (IsKeyPressed(KeyList.S) || IsKeyPressed(KeyList.Down)) {
-			Walk_Speed += ACCELERATION * delta;
-			if (Walk_Speed > MAX_WALK_SPEED)
-				Walk_Speed = MAX_WALK_SPEED;
-			velocity.x = GlobalTransform.basis.z.x * Walk_Speed;
-			velocity.z = GlobalTransform.basis.z.z * Walk_Speed;
-		} if (IsKeyPressed(KeyList.A) || IsKeyPressed(KeyList.Left)) {
-			Walk_Speed += ACCELERATION * delta;
-			if (Walk_Speed > MAX_WALK_SPEED)
-				Walk_Speed = MAX_WALK_SPEED;
-			velocity.x = -GlobalTransform.basis.x.x * Walk_Speed;
-			velocity.z = -GlobalTransform.basis.x.z * Walk_Speed;
-		} if (IsKeyPressed(KeyList.D) || IsKeyPressed(KeyList.Right)) {
-			Walk_Speed += ACCELERATION * delta;
-			if (Walk_Speed > MAX_WALK_SPEED)
-				Walk_Speed = MAX_WALK_SPEED;
-			velocity.x = GlobalTransform.basis.x.x * Walk_Speed;
-			velocity.z = GlobalTransform.basis.x.z * Walk_Speed;
-		}
-		
-		if (!(IsKeyPressed(KeyList.W) || IsKeyPressed(KeyList.A) || IsKeyPressed(KeyList.S) || IsKeyPressed(KeyList.D) || IsKeyPressed(KeyList.Up) || IsKeyPressed(KeyList.Down) || IsKeyPressed(KeyList.Left) || IsKeyPressed(KeyList.Right))) {
-			velocity.x = 0;
-			velocity.z = 0;
-			Walk_Speed = 5;
-		} else {
-			camera.bob();
-		}
+		if (IsKeyPressed(KeyList.W) || IsKeyPressed(KeyList.A) || IsKeyPressed(KeyList.S) || IsKeyPressed(KeyList.D) || IsKeyPressed(KeyList.Up) || IsKeyPressed(KeyList.Down) || IsKeyPressed(KeyList.Left) || IsKeyPressed(KeyList.Right)) {
+            if (IsOnFloor()) camera.bob();
+            if (IsKeyPressed(KeyList.W) || IsKeyPressed(KeyList.Up)) {
+                Walk_Speed += ACCELERATION * delta;
+                if (Walk_Speed > MAX_WALK_SPEED) Walk_Speed = MAX_WALK_SPEED;
+                velocity.x = -GlobalTransform.basis.z.x * Walk_Speed;
+                velocity.z = -GlobalTransform.basis.z.z * Walk_Speed;
+            } if (IsKeyPressed(KeyList.S) || IsKeyPressed(KeyList.Down)) {
+                Walk_Speed += ACCELERATION * delta;
+                if (Walk_Speed > MAX_WALK_SPEED) Walk_Speed = MAX_WALK_SPEED;
+                velocity.x = GlobalTransform.basis.z.x * Walk_Speed;
+                velocity.z = GlobalTransform.basis.z.z * Walk_Speed;
+            } if (IsKeyPressed(KeyList.A) || IsKeyPressed(KeyList.Left)) {
+                Walk_Speed += ACCELERATION * delta;
+                if (Walk_Speed > MAX_WALK_SPEED) Walk_Speed = MAX_WALK_SPEED;
+                velocity.x = -GlobalTransform.basis.x.x * Walk_Speed;
+                velocity.z = -GlobalTransform.basis.x.z * Walk_Speed;
+            } if (IsKeyPressed(KeyList.D) || IsKeyPressed(KeyList.Right)) {
+                Walk_Speed += ACCELERATION * delta;
+                if (Walk_Speed > MAX_WALK_SPEED) Walk_Speed = MAX_WALK_SPEED;
+                velocity.x = GlobalTransform.basis.x.x * Walk_Speed;
+                velocity.z = GlobalTransform.basis.x.z * Walk_Speed;
+            }
+        } else {
+            velocity.x = 0;
+            velocity.z = 0;
+            Walk_Speed = 5;
+        }
 			
 		if (IsOnFloor()) {
 			if (IsKeyPressed(KeyList.Space)) velocity.y = JUMP_SPEED;

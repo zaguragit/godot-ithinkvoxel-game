@@ -67,10 +67,3 @@ func set_world_voxel(position, voxel):
 		result = chunk.set_voxel_at_position(position, voxel);
 		if (result == true):
 			break;
-	# If you want, you can check to see if a voxel was placed or not using the code bellow:
-	"""
-	if (result == true):
-		print ("Voxel successfully placed");
-	else:
-		print ("Could not place voxel!");
-	"""
