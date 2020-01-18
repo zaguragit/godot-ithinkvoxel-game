@@ -20,11 +20,13 @@ public class Chunk : Spatial {
     MeshInstance mesh_instance;
     CollisionShape collision_shape;
     SurfaceTool surface_tool;
+	OpenSimplexNoise noise;
 
     public override void _Ready() {
         mesh_instance = GetNode("MeshInstance") as MeshInstance;
         collision_shape = GetNode("StaticBody/CollisionShape") as CollisionShape;
         surface_tool = new SurfaceTool();
+		noise = new OpenSimplexNoise(343256437L);
     }
 
     public void setup() {
@@ -36,20 +38,18 @@ public class Chunk : Spatial {
     }
 
     public void make_starter_terrain() {
-        for (int x = 0; x < CHUNK_SIZE; x++) {
-            for (int y = 0; y < CHUNK_SIZE; y++) {
-                for (int z = 0; z < CHUNK_SIZE; z++) {
-                    if (y < CHUNK_SIZE / 2) {
-                        if (y + 1 == CHUNK_SIZE / 2)
+        for (int x = 0; x < CHUNK_SIZE; x++)
+            for (int z = 0; z < CHUNK_SIZE; z++) {
+				var height = noise.Evaluate(x, z) * CHUNK_SIZE / 2 + 7;
+				for (int y = 0; y < CHUNK_SIZE; y++)
+                    if (y < height) {
+                        if (y + 1 == height)
                             voxels[x, y, z] = voxel_world.get_voxel_int_from_string("Grass");
                         else if (y == 0)
                             voxels[x, y, z] = voxel_world.get_voxel_int_from_string("MoonStone");
                         else voxels[x, y, z] = voxel_world.get_voxel_int_from_string("Stone");
                     } else voxels[x, y, z] = -1;
-                    GD.Print("aaa: " + voxels[x, y, z]);
-                } GD.Print("aaa: " + x + " / " + y);
-            } GD.Print("aaa: " + x);
-        }
+			}
         update_mesh();
     }
 
@@ -94,38 +94,30 @@ public class Chunk : Spatial {
 
     void make_voxel(int x, int y, int z) {
         if (voxels[x, y, z] == -1) return;
-
         if (_get_voxel_in_bounds(x, y + 1, z)) {
             if (_check_if_voxel_cause_render(x, y + 1, z))
                 make_voxel_face(x, y, z, "TOP");
         } else make_voxel_face(x, y, z, "TOP");
-
         if (_get_voxel_in_bounds(x, y - 1, z)) {
             if (_check_if_voxel_cause_render(x, y - 1, z))
                 make_voxel_face(x, y, z, "BOTTOM");
         } else make_voxel_face(x, y, z, "BOTTOM");
-
         if (_get_voxel_in_bounds(x + 1, y, z)) {
             if (_check_if_voxel_cause_render(x + 1, y, z))
                 make_voxel_face(x, y, z, "EAST");
         } else make_voxel_face(x, y, z, "EAST");
-
         if (_get_voxel_in_bounds(x - 1, y, z)) {
             if (_check_if_voxel_cause_render(x - 1, y, z))
                 make_voxel_face(x, y, z, "WEST");
         } else make_voxel_face(x, y, z, "WEST");
-
         if (_get_voxel_in_bounds(x, y, z + 1)) {
             if (_check_if_voxel_cause_render(x, y, z + 1))
                 make_voxel_face(x, y, z, "NORTH");
         } else make_voxel_face(x, y, z, "NORTH");
-
         if (_get_voxel_in_bounds(x, y, z - 1)) {
             if (_check_if_voxel_cause_render(x, y, z - 1))
                 make_voxel_face(x, y, z, "SOUTH");
         } else make_voxel_face(x, y, z, "SOUTH");
-
-        GD.Print("gdfgdfgdfgdfgdfgdfgdfgdfgdfg");
     }
 
 
@@ -142,11 +134,9 @@ public class Chunk : Spatial {
     void make_voxel_face(int xx, int yy, int zz, string face) {
         var voxel_data = voxel_world.get_voxel_data_from_int(voxels[xx, yy, zz]);
         var uv_position = voxel_data.texture;
-
         float x = xx * voxel_size;
         float y = yy * voxel_size;
         float z = zz * voxel_size;
-
         switch (face) {
             case "TOP":
                 _make_voxel_face_top(x, y, z, voxel_data);

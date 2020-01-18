@@ -15,9 +15,8 @@ size = Vector3( 10, 1, 10 )
 [sub_resource type="BoxShape" id=3]
 extents = Vector3( 5, 0.5, 5 )
 
-[sub_resource type="CapsuleShape" id=4]
-radius = 0.448924
-height = 0.923507
+[sub_resource type="BoxShape" id=4]
+extents = Vector3( 0.5, 1.5, 0.5 )
 
 [node name="World" type="Spatial"]
 script = ExtResource( 1 )
@@ -49,7 +48,6 @@ material/0 = null
 shape = SubResource( 3 )
 
 [node name="StaticBody4" type="StaticBody" parent="."]
-editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.7055, 0.722231, -0.0912261 )
 physics_material_override = SubResource( 1 )
 
@@ -61,7 +59,6 @@ material/0 = null
 shape = SubResource( 3 )
 
 [node name="Player" type="KinematicBody" parent="."]
-editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.93248, 0 )
 script = ExtResource( 3 )
 
@@ -71,7 +68,6 @@ environment = ExtResource( 4 )
 script = ExtResource( 5 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Player"]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
 shape = SubResource( 4 )
 
 [node name="Voxel_World" type="Spatial" parent="."]

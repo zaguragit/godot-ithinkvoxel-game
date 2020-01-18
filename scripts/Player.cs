@@ -6,7 +6,7 @@ public class Player : KinematicBody {
 	public const float SENSITIVITY_Y = 0.01f;
 	const float MAX_WALK_SPEED = 7f;
 	const int ACCELERATION = 1;
-	const int JUMP_SPEED = 3;
+	const int JUMP_SPEED = 5;
 	const float GRAVITY = 9.8f;
 	
 	Vector3 velocity = new Vector3(0, 0, 0);
