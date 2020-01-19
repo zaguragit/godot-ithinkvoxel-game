@@ -40,10 +40,15 @@ public class Chunk : Spatial {
     public void make_starter_terrain() {
         for (int x = 0; x < CHUNK_SIZE; x++)
             for (int z = 0; z < CHUNK_SIZE; z++) {
-				var height = noise.Evaluate(x, z) * CHUNK_SIZE / 2 + 7;
-				for (int y = 0; y < CHUNK_SIZE; y++)
+				var height = 
+                    noise.Evaluate((Translation.x + x) / 80, (Translation.z + z) / 80) * 36 +
+                    noise.Evaluate((Translation.x + x) / 50, (Translation.z + z) / 50) * 20 +
+                    noise.Evaluate((Translation.x + x) / 20, (Translation.z + z) / 20) * 10 +
+                    noise.Evaluate((Translation.x + x) / 7, (Translation.z + z) / 7) * 5 +
+                    7 - Translation.y;
+                for (int y = 0; y < CHUNK_SIZE; y++)
                     if (y < height) {
-                        if (y + 1 == height)
+                        if (y == (int) height)
                             voxels[x, y, z] = voxel_world.get_voxel_int_from_string("Grass");
                         else if (y == 0)
                             voxels[x, y, z] = voxel_world.get_voxel_int_from_string("MoonStone");

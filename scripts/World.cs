@@ -25,7 +25,7 @@ public class World: Spatial {
     	voxel_texture_unit = 1.0f / (voxel_texture_size / voxel_texture_tile_size);
         foreach (string voxelName in voxel_dictionary.Keys)
             voxel_list.Add(voxelName);
-        make_voxel_world(new Vector3(4, 1, 4));
+        make_voxel_world(new Vector3(12, 3, 12));
     }
 
 
