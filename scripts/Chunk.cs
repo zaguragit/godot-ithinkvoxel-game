@@ -20,6 +20,7 @@ public class Chunk : Spatial {
     MeshInstance mesh_instance;
     CollisionShape collision_shape;
     SurfaceTool surface_tool;
+	
 	OpenSimplexNoise noise;
 
     public override void _Ready() {
@@ -44,16 +45,17 @@ public class Chunk : Spatial {
                     noise.Evaluate((Translation.x + x) / 80, (Translation.z + z) / 80) * 36 +
                     noise.Evaluate((Translation.x + x) / 50, (Translation.z + z) / 50) * 20 +
                     noise.Evaluate((Translation.x + x) / 20, (Translation.z + z) / 20) * 10 +
-                    noise.Evaluate((Translation.x + x) / 7, (Translation.z + z) / 7) * 5 +
-                    7 - Translation.y;
-                for (int y = 0; y < CHUNK_SIZE; y++)
+                    noise.Evaluate((Translation.x + x) / 7, (Translation.z + z) / 7) * 5 + 7;
+                for (int yy = 0; yy < CHUNK_SIZE; yy++) {
+					var y = yy + (int) Translation.y;
                     if (y < height) {
                         if (y == (int) height)
-                            voxels[x, y, z] = voxel_world.get_voxel_int_from_string("Grass");
+                            voxels[x, yy, z] = voxel_world.get_voxel_int_from_string("Grass");
                         else if (y == 0)
-                            voxels[x, y, z] = voxel_world.get_voxel_int_from_string("MoonStone");
-                        else voxels[x, y, z] = voxel_world.get_voxel_int_from_string("Stone");
-                    } else voxels[x, y, z] = -1;
+                            voxels[x, yy, z] = voxel_world.get_voxel_int_from_string("MoonStone");
+                        else voxels[x, yy, z] = voxel_world.get_voxel_int_from_string("Stone");
+                    } else voxels[x, yy, z] = -1;
+				}
 			}
         update_mesh();
     }
