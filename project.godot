@@ -25,21 +25,12 @@ config/icon="res://resources/img/icon.png"
 
 [debug]
 
-settings/stdout/print_fps=true
-settings/stdout/verbose_stdout=true
 gdscript/warnings/return_value_discarded=false
 
 [gdnative]
 
 singletons=[  ]
 
-[memory]
-
-limits/message_queue/max_size_kb=2048
-
 [rendering]
 
-quality/intended_usage/framebuffer_allocation=3
-threads/thread_model=2
-quality/filters/msaa=1
 environment/default_environment="res://resources/default_env.tres"
